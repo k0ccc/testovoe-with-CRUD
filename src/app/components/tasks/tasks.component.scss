@@ -71,3 +71,37 @@ tr:hover{
     margin-bottom: 15px;
 }
 
+// Modal
+
+jw-modal{
+
+    .modal-text{
+        font-family: Manrope;
+        font-style: normal;
+        font-size: 20px;
+        line-height: 27px;
+        text-align: center;
+    }
+    .location-modal-text{
+        padding-top: 82px;
+        padding-bottom: 170px;
+    }
+    .button-text{
+        font-family: Manrope;
+        font-style: normal;
+        font-size: 18px;
+        line-height: 25px;
+        color: $main-color;
+    }
+    .first-button-offset{
+        margin-left: 95px;
+        margin-bottom: 40px;
+    }
+    .second-button-offset{
+        margin-left: 18%;
+    }
+    .padding-button{
+        padding: 2% 10%;
+    }
+
+}

@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, HostListener, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Task } from '@interfaces/task.interface';
+import { ModalService } from '../_modal';
 
 @Component({
   selector: 'app-tasks',
@@ -15,10 +16,11 @@ export class TasksComponent implements OnInit, AfterViewInit {
   name_Task: string;
   // Переменные для Task
   text_Task = '';
+  asked_Id:number;
   // Общие
   base_Url = 'http://localhost:3000/tasks';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private modalService: ModalService) {}
 
   ngOnInit(): void {
     // Взятие сохраненного фильтра
@@ -90,7 +92,27 @@ export class TasksComponent implements OnInit, AfterViewInit {
     this.tasks[id].edit = !this.tasks[id].edit;
   }
   // Удаление Task
-  remove_task(id: number): void {
-    console.log(id);
+  ask_remove_task(id_modal: string, id_task: number): void {
+    // Модалка взята от сюда: https://jasonwatmore.com/post/2020/09/24/angular-10-custom-modal-window-dialog-box
+    // т.к. Material запрещен
+
+    // Передаем id таски котокой обратились
+    this.asked_Id = id_task;
+    // Открываем модалку
+    this.modalService.open(id_modal);
+  }
+  closeModal(id: string) {
+    // Закрываем
+    this.modalService.close(id);
+  }
+  // Удаление таски
+  delete_Task(id:string) {
+    const id_task = this.asked_Id
+    this.http
+      .delete(this.base_Url + '/' + this.tasks[id_task].id)
+      .subscribe(() => {
+        this.tasks = this.tasks.filter((t) => t.id !== id_task+1);
+      });
+    this.modalService.close(id);
   }
 }

@@ -38,7 +38,7 @@
                     <a class="hover-pointer location" (click)="edit_task(i, task.task)">
                         <img src="../assets/svg/edit.svg">
                     </a>
-                    <a class="hover-pointer location" (click)="remove_task(i)">
+                    <a class="hover-pointer location" (click)="ask_remove_task('custom-modal-1', i)">
                         <img src="../assets/svg/remove.svg">
                     </a>
                 </td>
@@ -54,3 +54,13 @@
         </ng-container>
     </tbody>
 </table>
+
+<jw-modal id="custom-modal-1">
+        <h1 class="location-modal-text modal-text">Вы хотите удалить эту строку?</h1>
+        <button 
+            class="button-text first-button-offset padding-button"
+            (click)="closeModal('custom-modal-1');">Нет</button>
+        <button
+            class="button-text second-button-offset padding-button" 
+            (click)="delete_Task('custom-modal-1')">Да</button>
+</jw-modal>

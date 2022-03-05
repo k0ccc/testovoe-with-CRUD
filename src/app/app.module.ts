@@ -7,6 +7,7 @@ import { TasksComponent } from './components/tasks/tasks.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { FindTaskPipe } from './pipes/find-task.pipe';
+import { ModalModule } from './components/_modal';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { FindTaskPipe } from './pipes/find-task.pipe';
     HttpClientModule,
     FormsModule,
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ModalModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
