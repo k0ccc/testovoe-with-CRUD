@@ -1,0 +1,56 @@
+<p class="offset-left offset">Фильтр:</p>
+<div class="offset-left offset-inputs inputs">
+    <input [(ngModel)]="find_Task" placeholder="Поиск по задаче">
+    <input [(ngModel)]="name_Task"  class="name-task" placeholder="Введите название задачи">
+    <button (click)="add_task()" class="add-task">Добавить задачу</button>
+</div>
+<table class="tasks">
+    <thead>
+        <tr>
+            <th class="task-title" >Задача</th>
+            <th class="done-title" colspan="3">Выполнено</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngIf="tasks !== []">
+            <!-- Перебор Task -->
+            <tr *ngFor="let task of tasks | findTask:find_Task; let i = index" class="task" >
+                <!-- Изменение readonly-->
+                <td *ngIf="!task.edit" class="task" >
+                    <input readonly="readonly" class="offset-left" type="text" value="{{task.task}}">
+                </td>
+                <td *ngIf="task.edit" class="task" >
+                    <input  class="offset-left" type="text" [(ngModel)]="text_Task">
+                </td>
+                <!-- Checkboxs -->
+                <ng-container *ngIf="task.isCompleted === true; else unChecked" >
+                    <td  class="task">
+                        <input class = "location-checkbox background-green" type="checkbox" checked (click)="save_checkbox(i, task.isCompleted)">
+                    </td>
+                </ng-container>
+                <ng-template #unChecked>
+                    <td class="task">
+                        <input class = "location-checkbox background-green" type="checkbox" (click)="save_checkbox(i, task.isCompleted)">
+                    </td>
+                </ng-template>
+                <!-- Изменение иконкок и их функционала -->
+                <td *ngIf="!task.edit" class="task" >
+                    <a class="hover-pointer location" (click)="edit_task(i, task.task)">
+                        <img src="../assets/svg/edit.svg">
+                    </a>
+                    <a class="hover-pointer location" (click)="remove_task(i)">
+                        <img src="../assets/svg/remove.svg">
+                    </a>
+                </td>
+                <td class="task" *ngIf="task.edit">
+                    <a class="hover-pointer location" (click)="save(i, task.task)">
+                        <img src="../assets/svg/ok.svg">
+                    </a>
+                    <a class="hover-pointer location" (click)="cancel(i)">
+                        <img src="../assets/svg/cancel.svg">
+                    </a>
+                </td>
+            </tr>
+        </ng-container>
+    </tbody>
+</table>

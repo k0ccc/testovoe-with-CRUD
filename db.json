@@ -1,0 +1,34 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "task": "Выучить Typescript21312",
+      "isCompleted": false,
+      "edit": false
+    },
+    {
+      "id": 2,
+      "task": "Выучить Typescript",
+      "isCompleted": false,
+      "edit": false
+    },
+    {
+      "id": 3,
+      "task": "Выучить Ty",
+      "isCompleted": false,
+      "edit": false
+    },
+    {
+      "id": 4,
+      "task": "ацфпфыв",
+      "isCompleted": false,
+      "edit": false
+    },
+    {
+      "id": 5,
+      "task": "ацфапф",
+      "isCompleted": false,
+      "edit": false
+    }
+  ]
+}

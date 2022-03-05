@@ -1,0 +1,73 @@
+@import "../styles/variables";
+
+.inputs{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    .name-task{
+        margin-left: auto;
+        margin-right: 40px;
+        padding-right: 108px;
+    }
+    .add-task{
+        margin-right: 40px;
+        padding: 0px 35px 0px 35px;
+    }
+}
+
+.tasks{
+    border-color:$row-border-color;
+    border-style:solid;
+    border-width:1px;
+    width: 100%;
+    border-collapse: collapse;
+    
+}
+th.task-title{
+    background-color: $main-color;
+    color: $secondary-text-color;
+    text-align: left;
+    padding: 15px 0px 15px 40px;
+}
+th.done-title{
+    background-color: $main-color;
+    color: $secondary-text-color;
+    text-align: left;
+    padding: 15px 0px 15px 20px;
+}
+td.task{
+    border: 1px solid #ddd;
+}
+tr:hover{
+    background-color: $hover-color;
+}
+
+.hover-pointer:hover{
+    cursor: pointer;
+}
+
+.location{
+    margin: 20px auto 20px 50px ;
+}
+
+.background-green{
+    accent-color:$main-color
+}
+.location-checkbox{
+    width: 24px;
+    height: 24px;
+    margin: 20px 20px 20px 20px;
+}
+.offset-left{
+    margin-left: 40px;
+}
+
+.offset-inputs{
+    margin-bottom: 34px;
+}
+.offset{
+    margin-top: 35px;
+    margin-bottom: 15px;
+}
+
