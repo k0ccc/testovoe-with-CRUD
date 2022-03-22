@@ -12,51 +12,50 @@ export class TasksComponent implements OnInit, AfterViewInit {
   // Массив Задач
   tasks: Task[] = [];
   // Переменные для верхних импутов
-  find_Task = '';
-  name_Task: string;
+  findTask = '';
+  nameTask: string;
   // Переменные для Task
-  text_Task = '';
-  asked_Id:number;
+  textTask = '';
+  askedId:number;
   // Общие
-  base_Url = 'http://localhost:3000/tasks';
+  baseUrl = 'http://localhost:3000/tasks';
 
   constructor(private http: HttpClient, private modalService: ModalService) {}
 
   ngOnInit(): void {
     // Взятие сохраненного фильтра
-    this.find_Task = sessionStorage.getItem('find_Task');
+    this.findTask = localStorage.getItem('findTask');
   }
   // Сохронение фильтра
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {
-    sessionStorage.setItem('find_Task', this.find_Task);
+    localStorage.setItem('findTask', this.findTask);
   }
   ngAfterViewInit(): void {
     // Берем массив Task
-    this.http.get<Task[]>(this.base_Url).subscribe((data) => {
+    this.http.get<Task[]>(this.baseUrl).subscribe((data) => {
       this.tasks = data;
     });
   }
   // Можно создать отдельный сервис для всего этого.
   // Добавляем Task
   add_task() {
-    const post_Form: Task = {
+    const postForm: Task = {
       id: this.tasks[this.tasks.length - 1].id + 1,
-      task: this.name_Task,
+      task: this.nameTask,
       isCompleted: false,
       edit: false,
     };
     // Добавляем в локальный массив
-    this.tasks.push(post_Form);
+    this.tasks.push(postForm);
     // Добавляем в БД
-    this.http.post<Task>(this.base_Url, post_Form).subscribe();
+    this.http.post<Task>(this.baseUrl, postForm).subscribe();
   }
   // Разрешить\запретить редактирование Task
   edit_task(id: number, task: string) {
     console.log(task, id);
-    this.text_Task = task;
+    this.textTask = task;
     this.tasks[id].edit = !this.tasks[id].edit;
-    // this.tasks[id].task =
   }
   // Сохранение checkbox, локально, потом отправка на сервер
   save_checkbox(id: number, bool: boolean) {
@@ -69,13 +68,13 @@ export class TasksComponent implements OnInit, AfterViewInit {
       edit: this.tasks[id].edit,
     };
     this.http
-      .put<void>(this.base_Url + '/' + this.tasks[id].id, put_Form)
+      .put<void>(this.baseUrl + '/' + this.tasks[id].id, put_Form)
       .subscribe();
     console.log(this.tasks[id].isCompleted);
   }
   // Сохранение текста таски, локально, потом отправка на сервер
   save(id: number, task: string) {
-    this.tasks[id].task = this.text_Task;
+    this.tasks[id].task = this.textTask;
     this.tasks[id].edit = !this.tasks[id].edit;
     const put_Form: Task = {
       id: this.tasks[id].id,
@@ -84,7 +83,7 @@ export class TasksComponent implements OnInit, AfterViewInit {
       edit: this.tasks[id].edit,
     };
     this.http
-      .put<void>(this.base_Url + '/' + this.tasks[id].id, put_Form)
+      .put<void>(this.baseUrl + '/' + this.tasks[id].id, put_Form)
       .subscribe();
   }
   // Отмена редактирования
@@ -92,12 +91,12 @@ export class TasksComponent implements OnInit, AfterViewInit {
     this.tasks[id].edit = !this.tasks[id].edit;
   }
   // Удаление Task
-  ask_remove_task(id_modal: string, id_task: number): void {
+  ask_remove_task(id_modal: string, idTask: number): void {
     // Модалка взята от сюда: https://jasonwatmore.com/post/2020/09/24/angular-10-custom-modal-window-dialog-box
     // т.к. Material запрещен
 
     // Передаем id таски котокой обратились
-    this.asked_Id = id_task;
+    this.askedId = idTask;
     // Открываем модалку
     this.modalService.open(id_modal);
   }
@@ -107,11 +106,11 @@ export class TasksComponent implements OnInit, AfterViewInit {
   }
   // Удаление таски
   delete_Task(id:string) {
-    const id_task = this.asked_Id
+    const idTask = this.askedId
     this.http
-      .delete(this.base_Url + '/' + this.tasks[id_task].id)
+      .delete(this.baseUrl + '/' + this.tasks[idTask].id)
       .subscribe(() => {
-        this.tasks = this.tasks.filter((t) => t.id !== id_task+1);
+        this.tasks = this.tasks.filter((t) => t.id !== idTask+1);
       });
     this.modalService.close(id);
   }

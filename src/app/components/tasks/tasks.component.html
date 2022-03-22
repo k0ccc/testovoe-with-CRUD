@@ -1,7 +1,7 @@
 <p class="offset-left offset">Фильтр:</p>
 <div class="offset-left offset-inputs inputs">
-    <input [(ngModel)]="find_Task" placeholder="Поиск по задаче">
-    <input [(ngModel)]="name_Task"  class="name-task" placeholder="Введите название задачи">
+    <input [(ngModel)]="findTask" placeholder="Поиск по задаче">
+    <input [(ngModel)]="nameTask"  class="name-task" placeholder="Введите название задачи">
     <button (click)="add_task()" class="add-task">Добавить задачу</button>
 </div>
 <table class="tasks">
@@ -14,13 +14,13 @@
     <tbody>
         <ng-container *ngIf="tasks !== []">
             <!-- Перебор Task -->
-            <tr *ngFor="let task of tasks | findTask:find_Task; let i = index" class="task" >
+            <tr *ngFor="let task of tasks | findTask:findTask; let i = index" class="task" >
                 <!-- Изменение readonly-->
                 <td *ngIf="!task.edit" class="task" >
                     <input readonly="readonly" class="offset-left" type="text" value="{{task.task}}">
                 </td>
                 <td *ngIf="task.edit" class="task" >
-                    <input  class="offset-left" type="text" [(ngModel)]="text_Task">
+                    <input  class="offset-left" type="text" [(ngModel)]="textTask">
                 </td>
                 <!-- Checkboxs -->
                 <ng-container *ngIf="task.isCompleted === true; else unChecked" >
