@@ -10,13 +10,13 @@ import { ModalService } from '../_modal';
 })
 export class TasksComponent implements OnInit, AfterViewInit {
   // Массив Задач
-  tasks: Task[] = [];
+  tasks!: Task[];
   // Переменные для верхних импутов
-  findTask = '';
-  nameTask: string;
+  findTask!: string;
+  nameTask!: string;
   // Переменные для Task
-  textTask = '';
-  askedId:number;
+  textTask!: string;
+  askedId!: number;
   // Общие
   baseUrl = 'http://localhost:3000/tasks';
 
@@ -61,14 +61,14 @@ export class TasksComponent implements OnInit, AfterViewInit {
   save_checkbox(id: number, bool: boolean) {
     this.tasks[id].isCompleted = !this.tasks[id].isCompleted;
     // Если передавать только isCompleted, то сервер трет поля, что странно
-    const put_Form: Task = {
+    const putForm: Task = {
       id: this.tasks[id].id,
       task: this.tasks[id].task,
       isCompleted: this.tasks[id].isCompleted,
       edit: this.tasks[id].edit,
     };
     this.http
-      .put<void>(this.baseUrl + '/' + this.tasks[id].id, put_Form)
+      .put<void>(this.baseUrl + '/' + this.tasks[id].id, putForm)
       .subscribe();
     console.log(this.tasks[id].isCompleted);
   }
@@ -76,14 +76,14 @@ export class TasksComponent implements OnInit, AfterViewInit {
   save(id: number, task: string) {
     this.tasks[id].task = this.textTask;
     this.tasks[id].edit = !this.tasks[id].edit;
-    const put_Form: Task = {
+    const putForm: Task = {
       id: this.tasks[id].id,
       task: this.tasks[id].task,
       isCompleted: this.tasks[id].isCompleted,
       edit: this.tasks[id].edit,
     };
     this.http
-      .put<void>(this.baseUrl + '/' + this.tasks[id].id, put_Form)
+      .put<void>(this.baseUrl + '/' + this.tasks[id].id, putForm)
       .subscribe();
   }
   // Отмена редактирования
@@ -91,26 +91,26 @@ export class TasksComponent implements OnInit, AfterViewInit {
     this.tasks[id].edit = !this.tasks[id].edit;
   }
   // Удаление Task
-  ask_remove_task(id_modal: string, idTask: number): void {
+  ask_remove_task(idModal: string, idTask: number): void {
     // Модалка взята от сюда: https://jasonwatmore.com/post/2020/09/24/angular-10-custom-modal-window-dialog-box
     // т.к. Material запрещен
 
     // Передаем id таски котокой обратились
     this.askedId = idTask;
     // Открываем модалку
-    this.modalService.open(id_modal);
+    this.modalService.open(idModal);
   }
   closeModal(id: string) {
     // Закрываем
     this.modalService.close(id);
   }
   // Удаление таски
-  delete_Task(id:string) {
-    const idTask = this.askedId
+  delete_Task(id: string) {
+    const idTask = this.askedId;
     this.http
       .delete(this.baseUrl + '/' + this.tasks[idTask].id)
       .subscribe(() => {
-        this.tasks = this.tasks.filter((t) => t.id !== idTask+1);
+        this.tasks = this.tasks.filter((t) => t.id !== idTask + 1);
       });
     this.modalService.close(id);
   }
