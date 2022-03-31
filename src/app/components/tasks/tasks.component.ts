@@ -8,7 +8,7 @@ import { ModalService } from '../_modal';
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.scss'],
 })
-export class TasksComponent implements OnInit, AfterViewInit {
+export class TasksComponent implements OnInit {
   // Массив Задач
   tasks!: Task[];
   // Переменные для верхних импутов
@@ -25,17 +25,15 @@ export class TasksComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     // Взятие сохраненного фильтра
     this.findTask = localStorage.getItem('findTask');
+    // Берем массив Task
+    this.http.get<Task[]>(this.baseUrl).subscribe((data) => {
+      this.tasks = data;
+    });
   }
   // Сохронение фильтра
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {
     localStorage.setItem('findTask', this.findTask);
-  }
-  ngAfterViewInit(): void {
-    // Берем массив Task
-    this.http.get<Task[]>(this.baseUrl).subscribe((data) => {
-      this.tasks = data;
-    });
   }
   // Можно создать отдельный сервис для всего этого.
   // Добавляем Task
